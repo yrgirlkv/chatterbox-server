@@ -16,6 +16,16 @@ const fs = require('fs'); //Access to the File System library https://nodejs.org
 var storage = []; //should open the file or make it
 //storage = JSON.parse(the file name) || [];
 //fs.readFile()
+// var storage = JSON.parse(
+fs.readFile('message_log.txt', (err, data) => {
+  if (err) {
+    console.log('error');
+  }
+  console.log('success');
+  // return;
+});
+// console.log(fs.readFile('message_log.txt'));
+
 
 var defaultCorsHeaders = {
   'access-control-allow-origin': '*',
@@ -57,8 +67,7 @@ var requestHandler = function(request, response) {
         newMessage.createdAt = Date.now();
         storage.unshift(newMessage);
         console.log('request log: ' + JSON.stringify(newMessage));
-        //should update the file (//write json.stringify storage to the file)
-        //fs.writeFile
+        // fs.writeFile('message_log_2.txt', JSON.stringify(storage));
       });
       statusCode = 201;
     }

@@ -113,7 +113,7 @@ describe('Node Server Request Listener Function', function() {
     res = new stubs.response();
     handler.requestHandler(req, res);
     var messages = JSON.parse(res._data);
-    expect(messages[0].createdAt > messages[1].createdAt).to.equal(true);
+    expect(messages[0].createdAt >= messages[1].createdAt).to.equal(true);
   });
 
 });
