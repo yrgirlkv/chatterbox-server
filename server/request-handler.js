@@ -48,10 +48,13 @@ var requestHandler = function(request, response) {
 
   if (request.url === '/classes/messages') {
     if (request.method === 'GET') {
-      console.log(JSON.stringify(storage));
     } else if (request.method === 'POST') {
-      console.log('request log: ' + request.data);
-      storage.push(request.data);
+      request.on('data', function(data) {
+        let newMessage = JSON.parse(data);
+        newMessage.createdAt = Date.now();
+        storage.unshift(newMessage);
+        console.log('request log: ' + JSON.stringify(newMessage));
+      });
       statusCode = 201;
     }
     //Do something if neither
