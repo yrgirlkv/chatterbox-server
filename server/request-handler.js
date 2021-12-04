@@ -12,7 +12,10 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 
-var storage = [];
+const fs = require('fs'); //Access to the File System library https://nodejs.org/api/fs.html
+var storage = []; //should open the file or make it
+//storage = JSON.parse(the file name) || [];
+//fs.readFile()
 
 var defaultCorsHeaders = {
   'access-control-allow-origin': '*',
@@ -54,6 +57,8 @@ var requestHandler = function(request, response) {
         newMessage.createdAt = Date.now();
         storage.unshift(newMessage);
         console.log('request log: ' + JSON.stringify(newMessage));
+        //should update the file (//write json.stringify storage to the file)
+        //fs.writeFile
       });
       statusCode = 201;
     }
