@@ -91,4 +91,29 @@ describe('Node Server Request Listener Function', function() {
     expect(res._ended).to.equal(true);
   });
 
+  it('Should store messages in order of creation time', function () {
+    var doSomething;
+    var firstMessage = {
+      username: 'Mario',
+      text: 'It\'s a ME'
+    };
+    var req = new stubs.request('/classes/messages', 'POST', firstMessage);
+    var res = new stubs.response();
+    handler.requestHandler(req, res);
+
+    var secondMessage = {
+      username: 'Waluigi',
+      text: 'Wahaha!'
+    };
+    req = new stubs.request('/classes/messages', 'POST', secondMessage);
+    res = new stubs.response();
+    handler.requestHandler(req, res);
+
+    req = new stubs.request('/classes/messages', 'GET');
+    res = new stubs.response();
+    handler.requestHandler(req, res);
+    var messages = JSON.parse(res._data);
+    expect(messages[0].createdAt > messages[1].createdAt).to.equal(true);
+  });
+
 });
